@@ -1,7 +1,7 @@
 import UIKit
 
 protocol TodoTasksRoutingLogic {
-    func routeToSomewhere(identifier: TodoTasks.Something.DataPassing)
+
 }
 
 protocol TodoTasksDataPassing {
@@ -15,9 +15,6 @@ class TodoTasksRouter: NSObject, TodoTasksDataPassing {
 }
 
 extension TodoTasksRouter: TodoTasksRoutingLogic {
-    
-    func routeToSomewhere(identifier: TodoTasks.Something.DataPassing) {
-        
-    }
 
+    
 }

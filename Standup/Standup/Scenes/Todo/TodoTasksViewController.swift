@@ -1,7 +1,7 @@
 import UIKit
 
 protocol TodoTasksDisplayLogic: class {
-    func displaySomething(viewModel: TodoTasks.Something.ViewModel)
+    func displayTodoTasks(viewModel: TodoTasks.Fetch.ViewModel)
 }
 
 class TodoTasksViewController: UIViewController {
@@ -12,15 +12,14 @@ class TodoTasksViewController: UIViewController {
         super.viewDidLoad()
         title = "Todo"
         
-        let request = TodoTasks.Something.Request()
-        interactor?.doSomething(request: request)
+        interactor?.fetchTodoTasks(request: TodoTasks.Fetch.Request())
     }
 
 }
 
 extension TodoTasksViewController: TodoTasksDisplayLogic {
     
-    func displaySomething(viewModel: TodoTasks.Something.ViewModel) {
+    func displayTodoTasks(viewModel: TodoTasks.Fetch.ViewModel) {
     }
 
 }

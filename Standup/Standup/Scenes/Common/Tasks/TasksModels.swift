@@ -15,6 +15,12 @@ struct Tasks {
                 return completedDate != nil
             }
         }
+        
+        struct Group<I> {
+            let identifier: I
+            let title: String
+            let tasks: [Task]
+        }
 
     }
     

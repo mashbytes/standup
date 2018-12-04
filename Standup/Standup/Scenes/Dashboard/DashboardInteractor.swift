@@ -25,12 +25,10 @@ extension DashboardInteractor: DashboardBusinessLogic {
         
         let calendar = Calendar.current
         let groups: [String: [Task]] = Dictionary(grouping: tasks.values) { task in
-            let isYesterday = calendar.isDateInYesterday(task.scheduledDate)
-            if isYesterday {
+            if let completed = task.completedDate, calendar.isDateInYesterday(completed) {
                 return "yesterday"
             }
-            let isToday = calendar.isDateInToday(task.scheduledDate)
-            if isToday {
+            if let scheduled = task.scheduledDate, calendar.isDateInToday(scheduled) {
                 return "today"
             }
             return "na"

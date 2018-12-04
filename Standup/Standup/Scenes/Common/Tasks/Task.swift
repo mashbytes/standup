@@ -8,7 +8,7 @@ struct Task {
     let title: String
     let description: String?
     let createdDate: Date
-    let scheduledDate: Date
+    let scheduledDate: Date?
     let completedDate: Date?
     
 }
