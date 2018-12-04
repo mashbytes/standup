@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="paX-QG-FSw">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Home View Controller-->
+        <scene sceneID="hbd-RL-5ID">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iQE-1y-M78" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tabBarController id="paX-QG-FSw" customClass="HomeViewController" customModule="Standup" customModuleProvider="target" sceneMemberID="viewController">
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="RPp-EL-blg">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="vCb-rX-sPo" kind="relationship" relationship="viewControllers" id="Mhs-7U-Bws"/>
+                    </connections>
+                </tabBarController>
+            </objects>
+            <point key="canvasLocation" x="-1110" y="-449"/>
+        </scene>
+        <!--Dashboard-->
+        <scene sceneID="mk1-gn-Waw">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Dashboard" id="vCb-rX-sPo" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="7OW-ct-fzq"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dEv-NO-9FY" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-282" y="-773"/>
+        </scene>
+    </scenes>
+</document>
