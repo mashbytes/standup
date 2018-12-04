@@ -14,7 +14,14 @@ class HomeViewController: UITabBarController {
             if let dashboardVC = vc as? DashboardViewController {
                 DashboardConfigurator().configure(dashboardVC)
             }
+            if let todoVC = vc as? TodoTasksViewController {
+                TodoTasksConfigurator().configure(todoVC)
+            }
+            if let doneVC = vc as? CompletedTasksViewController {
+                CompletedTasksConfigurator().configure(doneVC)
+            }
         }
+        selectedIndex = 1
     }
     
 }

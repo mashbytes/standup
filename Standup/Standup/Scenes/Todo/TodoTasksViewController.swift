@@ -10,6 +10,8 @@ class TodoTasksViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = "Todo"
+        
         let request = TodoTasks.Something.Request()
         interactor?.doSomething(request: request)
     }

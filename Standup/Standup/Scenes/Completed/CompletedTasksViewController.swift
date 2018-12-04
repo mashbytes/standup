@@ -10,6 +10,7 @@ class CompletedTasksViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = "Completed"
         let request = CompletedTasks.Something.Request()
         interactor?.doSomething(request: request)
     }
