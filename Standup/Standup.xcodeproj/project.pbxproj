@@ -71,6 +71,10 @@
 		6059552621B3E88C00845B0C /* AddTaskBusinessLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6059552521B3E88C00845B0C /* AddTaskBusinessLogic.swift */; };
 		6059552921B3EA3600845B0C /* EditTaskModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6059552821B3EA3600845B0C /* EditTaskModels.swift */; };
 		6059552B21B427FF00845B0C /* EditTaskBusinessLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6059552A21B427FF00845B0C /* EditTaskBusinessLogic.swift */; };
+		60DE873D21BBBBE8005AA37A /* UITableView+Reuse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60DE873C21BBBBE8005AA37A /* UITableView+Reuse.swift */; };
+		60DE874121BBC0C3005AA37A /* SupportsTaskActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60DE874021BBC0C3005AA37A /* SupportsTaskActions.swift */; };
+		60DE875221BD55E1005AA37A /* ListTableViewCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60DE875121BD55E1005AA37A /* ListTableViewCoordinator.swift */; };
+		60DE875421C1AB03005AA37A /* ListTableViewStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60DE875321C1AB03005AA37A /* ListTableViewStyle.swift */; };
 		985B87B6B77CA2FB7BB0365C /* Pods_StandupTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8169D140B18DDD84396C75C9 /* Pods_StandupTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -163,6 +167,10 @@
 		6059552521B3E88C00845B0C /* AddTaskBusinessLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTaskBusinessLogic.swift; sourceTree = "<group>"; };
 		6059552821B3EA3600845B0C /* EditTaskModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTaskModels.swift; sourceTree = "<group>"; };
 		6059552A21B427FF00845B0C /* EditTaskBusinessLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTaskBusinessLogic.swift; sourceTree = "<group>"; };
+		60DE873C21BBBBE8005AA37A /* UITableView+Reuse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Reuse.swift"; sourceTree = "<group>"; };
+		60DE874021BBC0C3005AA37A /* SupportsTaskActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportsTaskActions.swift; sourceTree = "<group>"; };
+		60DE875121BD55E1005AA37A /* ListTableViewCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableViewCoordinator.swift; sourceTree = "<group>"; };
+		60DE875321C1AB03005AA37A /* ListTableViewStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableViewStyle.swift; sourceTree = "<group>"; };
 		8169D140B18DDD84396C75C9 /* Pods_StandupTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_StandupTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8497BE98431B6BE0538BD78A /* Pods-StandupTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StandupTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-StandupTests/Pods-StandupTests.release.xcconfig"; sourceTree = "<group>"; };
 		89E7D95F6F3BDA817978A4BB /* Pods-Standup.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Standup.release.xcconfig"; path = "Pods/Target Support Files/Pods-Standup/Pods-Standup.release.xcconfig"; sourceTree = "<group>"; };
@@ -279,6 +287,7 @@
 		60302DF521AAD1DE00BFE65C /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				60DE874221BD5383005AA37A /* List */,
 				605954E821AAE15400845B0C /* Dashboard */,
 				605954D721AAE10300845B0C /* Todo */,
 				605954CA21AAE0E100845B0C /* Completed */,
@@ -310,6 +319,7 @@
 			children = (
 				605954C721AADB8D00845B0C /* Tasks */,
 				6059550C21AF2E2B00845B0C /* Result.swift */,
+				60DE873C21BBBBE8005AA37A /* UITableView+Reuse.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -331,11 +341,8 @@
 		605954C721AADB8D00845B0C /* Tasks */ = {
 			isa = PBXGroup;
 			children = (
-				6059552721B3EA2B00845B0C /* Edit */,
-				6059552221B3E63800845B0C /* Add */,
-				6059551B21AF385F00845B0C /* Fetch */,
-				6059551621AF36FD00845B0C /* Complete */,
-				6059550721ADE60800845B0C /* Delete */,
+				60DE873F21BBC09E005AA37A /* Actions */,
+				60DE873E21BBC082005AA37A /* Display */,
 				605954C821AADB9800845B0C /* Task.swift */,
 				605954F721AAE38500845B0C /* TaskTableViewCell.swift */,
 				605954F821AAE38500845B0C /* TaskTableViewCell.xib */,
@@ -432,6 +439,35 @@
 				6059552A21B427FF00845B0C /* EditTaskBusinessLogic.swift */,
 			);
 			path = Edit;
+			sourceTree = "<group>";
+		};
+		60DE873E21BBC082005AA37A /* Display */ = {
+			isa = PBXGroup;
+			children = (
+				60DE874021BBC0C3005AA37A /* SupportsTaskActions.swift */,
+			);
+			path = Display;
+			sourceTree = "<group>";
+		};
+		60DE873F21BBC09E005AA37A /* Actions */ = {
+			isa = PBXGroup;
+			children = (
+				6059552721B3EA2B00845B0C /* Edit */,
+				6059552221B3E63800845B0C /* Add */,
+				6059551B21AF385F00845B0C /* Fetch */,
+				6059551621AF36FD00845B0C /* Complete */,
+				6059550721ADE60800845B0C /* Delete */,
+			);
+			path = Actions;
+			sourceTree = "<group>";
+		};
+		60DE874221BD5383005AA37A /* List */ = {
+			isa = PBXGroup;
+			children = (
+				60DE875121BD55E1005AA37A /* ListTableViewCoordinator.swift */,
+				60DE875321C1AB03005AA37A /* ListTableViewStyle.swift */,
+			);
+			path = List;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -658,6 +694,7 @@
 				605954F321AAE16100845B0C /* DashboardInteractor.swift in Sources */,
 				6059550921ADE63800845B0C /* TasksModels.swift in Sources */,
 				605954D221AAE0F600845B0C /* CompletedTasksRouter.swift in Sources */,
+				60DE873D21BBBBE8005AA37A /* UITableView+Reuse.swift in Sources */,
 				6059552B21B427FF00845B0C /* EditTaskBusinessLogic.swift in Sources */,
 				6059550321ADE5FE00845B0C /* DeleteTaskModels.swift in Sources */,
 				605954D321AAE0F600845B0C /* CompletedTasksModels.swift in Sources */,
@@ -672,7 +709,10 @@
 				605954F121AAE16100845B0C /* DashboardModels.swift in Sources */,
 				605954EF21AAE16100845B0C /* DashboardPresenter.swift in Sources */,
 				60302E0F21AAD22E00BFE65C /* DefaultControllerNamingStrategy.swift in Sources */,
+				60DE875421C1AB03005AA37A /* ListTableViewStyle.swift in Sources */,
 				60302E1621AAD22E00BFE65C /* ControllerInstantiator.swift in Sources */,
+				60DE875221BD55E1005AA37A /* ListTableViewCoordinator.swift in Sources */,
+				60DE874121BBC0C3005AA37A /* SupportsTaskActions.swift in Sources */,
 				605954F921AAE38500845B0C /* TaskTableViewCell.swift in Sources */,
 				605954BA21AAD63700845B0C /* HomeRouter.swift in Sources */,
 				6059552621B3E88C00845B0C /* AddTaskBusinessLogic.swift in Sources */,

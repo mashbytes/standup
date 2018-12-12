@@ -18,13 +18,10 @@ enum Dashboard {
         struct ViewModel {
             
             typealias Task = Tasks.ViewModel.Task
+            typealias Section = Tasks.List.ViewModel.Section
+
             let sections: [Section]
             
-            struct Section {
-                let title: String
-                let tasks: [Tasks.ViewModel.Task]
-            }
-                        
         }
         
     }

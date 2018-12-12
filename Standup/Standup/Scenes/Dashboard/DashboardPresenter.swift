@@ -23,7 +23,7 @@ extension DashboardPresenter: DashboardPresentationLogic {
     private func buildTaskViewModel(fromTask task: Dashboard.FetchTasks.Response.IdentifiableTask) -> Dashboard.FetchTasks.ViewModel.Task {
         let created = task.task.createdDate.description
         let completed = task.task.completedDate?.description
-        return Dashboard.FetchTasks.ViewModel.Task(identifier: task.identifier, title: task.task.title, description: task.task.description, createdDate: created, completedDate: completed)
+        return Dashboard.FetchTasks.ViewModel.Task(identifier: task.identifier, title: task.task.title, description: task.task.description, createdDate: created, completedDate: completed, actions: [])
     }
 
 }

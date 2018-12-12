@@ -6,15 +6,12 @@ struct TaskTableViewCellModel {
     let showTick: Bool
 }
 
-class TaskTableViewCell: UITableViewCell {
+class TaskTableViewCell: UITableViewCell, ProvidesNib {
     
-    static let nibName = "TaskTableViewCell"
-    static let nib = UINib(nibName: nibName, bundle: nil)
-
-    @IBOutlet weak var icon: UIImageView!
+    @IBOutlet private weak var icon: UIImageView!
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var descriptionLabel: UILabel!
-    @IBOutlet weak var container: UIView!
+    @IBOutlet private weak var container: UIView!
     
     override func awakeFromNib() {
         super.awakeFromNib()

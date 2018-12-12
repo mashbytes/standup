@@ -24,7 +24,7 @@ enum TodoTasks {
             
         }
         struct ViewModel {
-            typealias Section = Tasks.ViewModel.Group<DataPassing.SectionIdentifier>
+            typealias Section = Tasks.List.ViewModel.Section
             
             let sections: [Section]
         }

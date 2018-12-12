@@ -25,7 +25,16 @@ extension TodoTasksInteractor: TodoTasksBusinessLogic {
 extension TodoTasksInteractor: DefaultFetchTasksBusinessLogic {
     
     func didFetchTasks(_ fetched: [Task]) {
-        let todoTasks = fetched.filter { $0.completedDate == nil}
+        let calendar = Calendar.current
+        let todoTasks = fetched.filter { task in
+            guard task.completedDate == nil else {
+                return false
+            }
+            guard let scheduled = task.scheduledDate else {
+                return true
+            }
+            return !calendar.isDateInToday(scheduled)
+        }
         let byDate = Dictionary(grouping: todoTasks) { $0.scheduledDate }
         
         let sections = byDate.map { pair -> TodoTasks.Fetch.Response.Section in

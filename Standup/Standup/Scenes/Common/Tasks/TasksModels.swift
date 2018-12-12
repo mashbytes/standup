@@ -10,9 +10,16 @@ struct Tasks {
             let description: String?
             let createdDate: String
             let completedDate: String?
+            let actions: [Action]
             
             var isCompleted: Bool {
                 return completedDate != nil
+            }
+            
+            enum Action: Int, Codable {
+                case markComplete
+                case markIncomplete
+                case delete
             }
         }
         
