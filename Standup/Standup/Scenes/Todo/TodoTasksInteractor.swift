@@ -25,31 +25,23 @@ extension TodoTasksInteractor: TodoTasksBusinessLogic {
 extension TodoTasksInteractor: DefaultFetchTasksBusinessLogic {
     
     func didFetchTasks(_ fetched: [Task]) {
-        let calendar = Calendar.current
-        let todoTasks = fetched.filter { task in
-            guard task.completedDate == nil else {
-                return false
-            }
-            guard let scheduled = task.scheduledDate else {
-                return true
-            }
-            return !calendar.isDateInToday(scheduled)
-        }
-        let byDate = Dictionary(grouping: todoTasks) { $0.scheduledDate }
+        let tasks = fetched
+            .filter(whereStatusIsTodo)
+            .toIdentifiableTasks()
         
-        let sections = byDate.map { pair -> TodoTasks.Fetch.Response.Section in
-            let (date, tasks) = pair
-            let identifier: TodoTasks.DataPassing.SectionIdentifier = (date == nil ? .unscheduled : .scheduled(date!))
-            let mapped = Dictionary(uniqueKeysWithValues: tasks.map { ($0.id, $0) })
-            return TodoTasks.Fetch.Response.Section(identifier: identifier, date: date, tasks: mapped)
-        }
-        
-        let response = TodoTasks.Fetch.Response(sections: sections)
+        let response = TodoTasks.Fetch.Response(tasks: tasks)
         presenter?.presentTodoTasks(response: response)
     }
     
     func didntFetchTasks(dueToError error: Error) {
         
+    }
+    
+    private func whereStatusIsTodo(_ task: Task) -> Bool {
+        if case .todo = task.status {
+            return true
+        }
+        return false
     }
 
 }

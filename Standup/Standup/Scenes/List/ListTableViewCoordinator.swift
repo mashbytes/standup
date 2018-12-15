@@ -58,7 +58,7 @@ extension ListTableViewCoordinator: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeCell(forIndexPath: indexPath) as TaskTableViewCell
         let task = sections[indexPath.section].tasks[indexPath.row]
-        let model = TaskTableViewCellModel(title: task.title, description: task.description, showTick: task.isCompleted)
+        let model = TaskTableViewCellModel(title: task.title, showTick: task.isCompleted)
         cell.displayModel(model)
         return cell
     }

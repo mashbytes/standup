@@ -18,7 +18,7 @@ protocol DefaultAddTaskBusinessLogic: AddTaskBusinessLogic {
 extension DefaultAddTaskBusinessLogic {
     
     func addTask(request: Tasks.Add.Request) {
-        let new = Task(id: "", title: request.title, description: request.description, createdDate: Date(), scheduledDate: request.scheduledDate ?? Date(), completedDate: nil)
+        let new = Task(id: "", title: request.title, status: .todo(0))
         taskService?.create(new) { result in
             switch result {
             case .success(let added):

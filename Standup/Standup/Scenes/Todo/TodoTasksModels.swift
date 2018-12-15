@@ -3,30 +3,18 @@ import UIKit
 enum TodoTasks {
     
     struct DataPassing {
-        enum SectionIdentifier {
-            case scheduled(Date)
-            case unscheduled
-            
-        }
+        typealias TaskIdentifier = Task.ID
     }
     
-
     enum Fetch {
         struct Request { }
         struct Response {
-            let sections: [Section]
-            
-            struct Section {
-                let identifier: DataPassing.SectionIdentifier
-                let date: Date?
-                let tasks: [Tasks.DataPassing.TaskIdentifier: Task]
-            }
-            
+            let tasks: [(DataPassing.TaskIdentifier, Task)]
         }
         struct ViewModel {
             typealias Section = Tasks.List.ViewModel.Section
             
-            let sections: [Section]
+            let section: Section
         }
     }
     

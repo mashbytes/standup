@@ -23,7 +23,7 @@ extension DefaultEditTaskBusinessLogic where Self: TaskDataStore {
             didntEditTask(withIdentifier: identifier, dueToError: TaskServiceError.notFound)
             return
         }
-        let updated = task.withTitle(request.title).withDescription(request.description)
+        let updated = task.withTitle(request.title)
         taskService?.update(updated) { result in
             switch result {
             case .success(let newTask):

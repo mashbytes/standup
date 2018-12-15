@@ -7,13 +7,8 @@ enum Dashboard {
             
         }
         struct Response {
-            let yesterday: [IdentifiableTask]
-            let today: [IdentifiableTask]
-            
-            struct IdentifiableTask {
-                let identifier: Tasks.DataPassing.TaskIdentifier
-                let task: Task
-            }
+            let yesterday: [Tasks.IdentifiableTask]
+            let today: [Tasks.IdentifiableTask]
         }
         struct ViewModel {
             

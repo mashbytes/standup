@@ -48,7 +48,7 @@ extension TodoTasksViewController: ListTableViewCoordinatorDelegate {
 extension TodoTasksViewController: TodoTasksDisplayLogic {
     
     func displayTodoTasks(viewModel: TodoTasks.Fetch.ViewModel) {
-        tableCoordinator.sections = viewModel.sections
+        tableCoordinator.sections = [viewModel.section]
         tableView.reloadData()
     }
 

@@ -2,7 +2,6 @@ import UIKit
 
 struct TaskTableViewCellModel {
     let title: String
-    let description: String?
     let showTick: Bool
 }
 
@@ -10,7 +9,6 @@ class TaskTableViewCell: UITableViewCell, ProvidesNib {
     
     @IBOutlet private weak var icon: UIImageView!
     @IBOutlet private weak var titleLabel: UILabel!
-    @IBOutlet private weak var descriptionLabel: UILabel!
     @IBOutlet private weak var container: UIView!
     
     override func awakeFromNib() {
@@ -28,15 +26,12 @@ class TaskTableViewCell: UITableViewCell, ProvidesNib {
     override func prepareForReuse() {
         super.prepareForReuse()
         titleLabel.text = nil
-        descriptionLabel.text = nil
         icon.isHidden = true
     }
 
     func displayModel(_ model: TaskTableViewCellModel) {
         icon.isHidden = !model.showTick
         titleLabel.text = model.title
-        descriptionLabel.text = model.description
-        descriptionLabel.isHidden = model.description == nil
     }
     
 }

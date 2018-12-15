@@ -19,24 +19,21 @@ extension DashboardInteractor: DashboardBusinessLogic {
 
     
     private func displayTasks() {
-        func toIdentifiableTask(_ task: Task) -> Dashboard.FetchTasks.Response.IdentifiableTask {
-            return Dashboard.FetchTasks.Response.IdentifiableTask(identifier: task.id, task: task)
-        }
+        
         
         let calendar = Calendar.current
         let groups: [String: [Task]] = Dictionary(grouping: tasks.values) { task in
-            if let completed = task.completedDate, calendar.isDateInYesterday(completed) {
-                return "yesterday"
+            switch task.status {
+            case .done(let date) where calendar.isDateInYesterday(date): return "yesterday"
+            case .done(let date) where calendar.isDateInToday(date): fallthrough
+            case .wip: return "today"
+            default: return "na"
             }
-            if let scheduled = task.scheduledDate, calendar.isDateInToday(scheduled) {
-                return "today"
-            }
-            return "na"
         }
         let yesterday = groups["yesterday"] ?? []
         let today = groups["today"] ?? []
         
-        let response = Dashboard.FetchTasks.Response(yesterday: yesterday.map(toIdentifiableTask), today: today.map(toIdentifiableTask))
+        let response = Dashboard.FetchTasks.Response(yesterday: yesterday.toIdentifiableTasks(), today: today.toIdentifiableTasks())
         presenter?.presentTasks(response: response)
     }
     

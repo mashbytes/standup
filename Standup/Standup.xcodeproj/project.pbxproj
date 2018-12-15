@@ -75,6 +75,8 @@
 		60DE874121BBC0C3005AA37A /* SupportsTaskActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60DE874021BBC0C3005AA37A /* SupportsTaskActions.swift */; };
 		60DE875221BD55E1005AA37A /* ListTableViewCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60DE875121BD55E1005AA37A /* ListTableViewCoordinator.swift */; };
 		60DE875421C1AB03005AA37A /* ListTableViewStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60DE875321C1AB03005AA37A /* ListTableViewStyle.swift */; };
+		60DE875721C5567F005AA37A /* Task+ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60DE875621C5567F005AA37A /* Task+ViewModel.swift */; };
+		60DE875921C559EB005AA37A /* FakeTasks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60DE875821C559EB005AA37A /* FakeTasks.swift */; };
 		985B87B6B77CA2FB7BB0365C /* Pods_StandupTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8169D140B18DDD84396C75C9 /* Pods_StandupTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -171,6 +173,8 @@
 		60DE874021BBC0C3005AA37A /* SupportsTaskActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportsTaskActions.swift; sourceTree = "<group>"; };
 		60DE875121BD55E1005AA37A /* ListTableViewCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableViewCoordinator.swift; sourceTree = "<group>"; };
 		60DE875321C1AB03005AA37A /* ListTableViewStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableViewStyle.swift; sourceTree = "<group>"; };
+		60DE875621C5567F005AA37A /* Task+ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Task+ViewModel.swift"; sourceTree = "<group>"; };
+		60DE875821C559EB005AA37A /* FakeTasks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeTasks.swift; sourceTree = "<group>"; };
 		8169D140B18DDD84396C75C9 /* Pods_StandupTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_StandupTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8497BE98431B6BE0538BD78A /* Pods-StandupTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StandupTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-StandupTests/Pods-StandupTests.release.xcconfig"; sourceTree = "<group>"; };
 		89E7D95F6F3BDA817978A4BB /* Pods-Standup.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Standup.release.xcconfig"; path = "Pods/Target Support Files/Pods-Standup/Pods-Standup.release.xcconfig"; sourceTree = "<group>"; };
@@ -341,6 +345,7 @@
 		605954C721AADB8D00845B0C /* Tasks */ = {
 			isa = PBXGroup;
 			children = (
+				60DE875521C55674005AA37A /* Presentation */,
 				60DE873F21BBC09E005AA37A /* Actions */,
 				60DE873E21BBC082005AA37A /* Display */,
 				605954C821AADB9800845B0C /* Task.swift */,
@@ -350,6 +355,7 @@
 				6059550A21AE84AE00845B0C /* TaskService.swift */,
 				6059550E21AF2F1600845B0C /* TaskDataStore.swift */,
 				6059552021B2D65600845B0C /* InMemoryTaskService.swift */,
+				60DE875821C559EB005AA37A /* FakeTasks.swift */,
 			);
 			path = Tasks;
 			sourceTree = "<group>";
@@ -468,6 +474,14 @@
 				60DE875321C1AB03005AA37A /* ListTableViewStyle.swift */,
 			);
 			path = List;
+			sourceTree = "<group>";
+		};
+		60DE875521C55674005AA37A /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				60DE875621C5567F005AA37A /* Task+ViewModel.swift */,
+			);
+			path = Presentation;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -702,6 +716,7 @@
 				6059550D21AF2E2B00845B0C /* Result.swift in Sources */,
 				605954BB21AAD63700845B0C /* HomeModels.swift in Sources */,
 				605954E321AAE11200845B0C /* TodoTasksConfigurator.swift in Sources */,
+				60DE875721C5567F005AA37A /* Task+ViewModel.swift in Sources */,
 				6059551A21AF372D00845B0C /* CompleteTaskBusinessLogic.swift in Sources */,
 				60028BA221AAD0D60073D016 /* AppDelegate.swift in Sources */,
 				605954F021AAE16100845B0C /* DashboardRouter.swift in Sources */,
@@ -714,6 +729,7 @@
 				60DE875221BD55E1005AA37A /* ListTableViewCoordinator.swift in Sources */,
 				60DE874121BBC0C3005AA37A /* SupportsTaskActions.swift in Sources */,
 				605954F921AAE38500845B0C /* TaskTableViewCell.swift in Sources */,
+				60DE875921C559EB005AA37A /* FakeTasks.swift in Sources */,
 				605954BA21AAD63700845B0C /* HomeRouter.swift in Sources */,
 				6059552621B3E88C00845B0C /* AddTaskBusinessLogic.swift in Sources */,
 				60302E1521AAD22E00BFE65C /* ControllerFactory.swift in Sources */,

@@ -1,14 +1,14 @@
 import Foundation
 
 struct Tasks {
+    
+    typealias IdentifiableTask = (DataPassing.TaskIdentifier, Task)
 
     struct ViewModel {
         
         struct Task: Codable {
             let identifier: DataPassing.TaskIdentifier
             let title: String
-            let description: String?
-            let createdDate: String
             let completedDate: String?
             let actions: [Action]
             
@@ -17,6 +17,7 @@ struct Tasks {
             }
             
             enum Action: Int, Codable {
+                case start
                 case markComplete
                 case markIncomplete
                 case delete
