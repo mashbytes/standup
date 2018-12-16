@@ -32,7 +32,7 @@ class DashboardViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        interactor?.fetchTasks(request: Tasks.Fetch.Request())
+        interactor?.fetchTasks(request: Dashboard.FetchTasks.Request())
     }
     
 
