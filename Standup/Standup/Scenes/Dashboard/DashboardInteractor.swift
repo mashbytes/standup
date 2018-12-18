@@ -32,7 +32,7 @@ class DashboardInteractor: DashboardDataStore {
                 default: return false
                 }
             }
-            .sorted { $0.order < $1.order }
+            .sortedByOrder()
     }
     
     private var yesterday: [Task] {
@@ -43,7 +43,7 @@ class DashboardInteractor: DashboardDataStore {
                 default: return false
                 }
             }
-            .sorted { $0.order < $1.order }
+            .sortedByOrder()
     }
     
     func taskForIdentifier(_ identifier: Tasks.DataPassing.TaskIdentifier) -> Task? {
@@ -71,32 +71,45 @@ extension DashboardInteractor: DashboardBusinessLogic {
     }
     
     func moveTaskToToday(request: Dashboard.MoveTaskToToday.Request) {
-        guard let task = taskForIdentifier(request.identifier), let toUpdate = updatedTask(task, toPosition: request.position, in: today) else {
+        guard let task = taskForIdentifier(request.identifier) else {
             return
         }
-        taskService?.update(toUpdate) { result in
-            switch result {
-            case .success(let updated):
-                self.tasks[updated.id] = updated
-                self.displayTasks()
-            case .failure:
-                self.displayTasks()
+        
+        func updatedStatus() -> Task.Status {
+            switch task.status {
+            case .done: return .done(Date())
+            default: return .wip
             }
         }
+        
+        let toUpdate = reorderTasks(today, toInclude: task, atPosition: request.position) {
+            return $0.withStatus(updatedStatus())
+        }
+        
+        taskService?.batchUpdate(toUpdate, callback: processBatchUpdateResult)
     }
     
     func moveTaskToYesterday(request: Dashboard.MoveTaskToYesterday.Request) {
-        guard let task = taskForIdentifier(request.identifier), let toUpdate = updatedTask(task, toPosition: request.position, in: yesterday) else {
+        guard let task = taskForIdentifier(request.identifier) else {
             return
         }
-        taskService?.update(toUpdate) { result in
-            switch result {
-            case .success(let updated):
-                self.tasks[updated.id] = updated
-                self.displayTasks()
-            case .failure:
-                self.displayTasks()
+        
+        let toUpdate = reorderTasks(yesterday, toInclude: task, atPosition: request.position) {
+            return $0.withCompletedDate(Date().addingTimeInterval(-1.days))
+        }
+
+        taskService?.batchUpdate(toUpdate, callback: processBatchUpdateResult)
+    }
+    
+    private func processBatchUpdateResult(_ result: Result<[Task]>) {
+        switch result {
+        case .success(let updated):
+            updated.forEach {
+                self.tasks[$0.id] = $0
             }
+            self.displayTasks()
+        case .failure:
+            self.displayTasks()
         }
     }
     
@@ -135,7 +148,7 @@ extension DashboardInteractor: DashboardBusinessLogic {
         guard let task = taskForIdentifier(request.identifier) else {
             return
         }
-        let toUpdate = task.withStatus(.todo(0))
+        let toUpdate = task.withStatus(.todo)
         taskService?.update(toUpdate) { result in
             switch result {
             case .success(let updated):
@@ -152,21 +165,41 @@ extension DashboardInteractor: DashboardBusinessLogic {
         presenter?.presentTasks(response: response)
     }
     
-    private func updatedTask(_ task: Task, toPosition position: Dashboard.MoveTaskToToday.Request.Position, in section: [Task]) -> Task? {
-        switch position {
-        case .first:
-            let existingFirstTaskOrder = section.first?.order ?? 100
-            return task.withStatus(.wip(existingFirstTaskOrder - 100))
-        case .between(let after, let before):
-            guard let afterTask = taskForIdentifier(after), let beforeTask = taskForIdentifier(before) else {
-                return nil
+    private func reorderTasks(_ tasks: [Task], toInclude task: Task, atPosition position: Dashboard.MoveTaskRequest.Position, applyingTransformation transformer: (Task) -> Task) -> [Task] {
+        let ordered = Set(tasks).subtracting([task]).sortedByOrder()
+        let updatedTask = transformer(task)
+        
+        func reorderTasksForPosition() -> [Task] {
+            switch position {
+            case .first: return ([updatedTask] + ordered)
+            case .between(let after, let before):
+                guard let afterTask = taskForIdentifier(after), let beforeTask = taskForIdentifier(before) else {
+                    return ordered
+                }
+                
+                guard let afterIndex = ordered.firstIndex(of: afterTask), let beforeIndex = ordered.firstIndex(of: beforeTask) else {
+                    return ordered
+                }
+                
+                return Array(ordered.prefix(through: afterIndex) + [updatedTask] + ordered.suffix(from: beforeIndex))
+            case .last:
+                return (ordered + [updatedTask])
             }
-            let order = (beforeTask.order - afterTask.order) / 2
-            return task.withStatus(.wip(order))
-        case .last:
-            let existingLastTaskOrder = section.last?.order ?? -100
-            return task.withStatus(.wip(existingLastTaskOrder + 100))
         }
+
+        return reorderTasksForPosition()
+            .enumerated()
+            .map { offset, next in
+                return next.withOrder(offset)
+            }
     }
 
+}
+
+extension Sequence where Element == Task {
+    
+    func sortedByOrder() -> [Element] {
+        return sorted { $0.order < $1.order }
+    }
+    
 }

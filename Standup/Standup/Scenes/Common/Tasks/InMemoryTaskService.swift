@@ -23,6 +23,13 @@ class InMemoryTaskService: TaskService {
         callback(.success(task))
     }
     
+    func batchUpdate(_ tasks: [Task], callback: @escaping (Result<[Task]>) -> Void) {
+        tasks.forEach {
+            self.tasks[$0.id] = $0
+        }
+        callback(.success(tasks))
+    }
+    
     func create(_ task: Task, callback: @escaping (Result<Task>) -> Void) {
         let id = UUID().uuidString
         let created = task.withID(id)

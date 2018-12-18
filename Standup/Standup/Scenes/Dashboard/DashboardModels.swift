@@ -54,8 +54,6 @@ enum Dashboard {
             let today: [Tasks.IdentifiableTask]
         }
         struct ViewModel {
-            
-            typealias Task = Tasks.ViewModel.Task
             typealias Section = Tasks.List.ViewModel.Section
 
             let sections: [Section]

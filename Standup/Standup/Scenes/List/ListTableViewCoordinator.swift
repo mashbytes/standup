@@ -6,6 +6,7 @@ protocol ListTableViewCoordinatorDelegate: class {
     
     func task(_ task: Tasks.ViewModel.Task, deletedFromSection section: Tasks.List.ViewModel.Section)
     func task(_ task: Tasks.ViewModel.Task, insertedInSection section: Tasks.List.ViewModel.Section)
+    func task(_ task: Tasks.ViewModel.Task, movedFrom from: IndexPath, to: IndexPath)
     
 }
 
@@ -74,6 +75,7 @@ extension ListTableViewCoordinator: UITableViewDataSource {
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         let task = deleteTask(atIndexPath: sourceIndexPath)
         insertTask(task, atIndexPath: destinationIndexPath)
+        delegate?.task(task, movedFrom: sourceIndexPath, to: destinationIndexPath)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -151,9 +153,9 @@ extension ListTableViewCoordinator: UITableViewDropDelegate {
 
 private class TaskItemProvider: NSObject, Codable, NSItemProviderReading, NSItemProviderWriting {
     
-    let task: Dashboard.FetchTasks.ViewModel.Task
+    let task: Tasks.ViewModel.Task
     
-    init(task: Dashboard.FetchTasks.ViewModel.Task) {
+    init(task: Tasks.ViewModel.Task) {
         self.task = task
     }
     

@@ -38,6 +38,15 @@ class DashboardViewController: UIViewController {
 
 }
 
+extension DashboardViewController: DashboardDisplayLogic {
+    
+    func displayTasks(viewModel: Dashboard.FetchTasks.ViewModel) {
+        tableCoordinator.sections = viewModel.sections
+        tableView.reloadData()
+    }
+    
+}
+
 extension DashboardViewController: ListTableViewCoordinatorDelegate {
     
     func task(_ task: Tasks.ViewModel.Task, insertedInSection section: Tasks.List.ViewModel.Section) {
@@ -47,13 +56,35 @@ extension DashboardViewController: ListTableViewCoordinatorDelegate {
     func task(_ task: Tasks.ViewModel.Task, deletedFromSection section: Tasks.List.ViewModel.Section) {
         
     }
-}
-
-extension DashboardViewController: DashboardDisplayLogic {
     
-    func displayTasks(viewModel: Dashboard.FetchTasks.ViewModel) {
-        tableCoordinator.sections = viewModel.sections
-        tableView.reloadData()
+    func task(_ task: Tasks.ViewModel.Task, movedFrom from: IndexPath, to: IndexPath) {
+        // todo don't like this being magic number based
+        switch to.section {
+        case 0:
+            let position = targetPosition(fromIndexPath: to)
+            let request = Dashboard.MoveTaskToYesterday.Request(identifier: task.identifier, position: position)
+            interactor?.moveTaskToYesterday(request: request)
+        case 1:
+            let position = targetPosition(fromIndexPath: to)
+            let request = Dashboard.MoveTaskToToday.Request(identifier: task.identifier, position: position)
+            interactor?.moveTaskToToday(request: request)
+        default:
+            return
+        }
     }
-
+    
+    private func targetPosition(fromIndexPath indexPath: IndexPath) -> Dashboard.MoveTaskRequest.Position {
+        if indexPath.row == 0 {
+            return .first
+        }
+        let tasks = tableCoordinator.sections[indexPath.section].tasks
+        if indexPath.row == tasks.count - 1 {
+            return .last
+        }
+        let before = tasks[indexPath.row - 1]
+        let after = tasks[indexPath.row + 1]
+        return .between(before.identifier, after.identifier)
+        
+    }
 }
+

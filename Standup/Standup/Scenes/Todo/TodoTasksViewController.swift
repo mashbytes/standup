@@ -43,6 +43,10 @@ extension TodoTasksViewController: ListTableViewCoordinatorDelegate {
     func task(_ task: Tasks.ViewModel.Task, deletedFromSection section: Tasks.List.ViewModel.Section) {
         
     }
+    
+    func task(_ task: Tasks.ViewModel.Task, movedFrom from: IndexPath, to: IndexPath) {
+        
+    }
 }
 
 extension TodoTasksViewController: TodoTasksDisplayLogic {
