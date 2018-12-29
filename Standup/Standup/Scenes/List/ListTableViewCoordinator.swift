@@ -82,7 +82,9 @@ extension ListTableViewCoordinator: UITableViewDataSource {
         return 60
     }
     
-
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return sections[section].title
+    }
 }
 
 extension ListTableViewCoordinator: UITableViewDragDelegate {
