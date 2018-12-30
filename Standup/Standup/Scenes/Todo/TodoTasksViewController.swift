@@ -13,6 +13,9 @@ class TodoTasksViewController: UIViewController {
     private lazy var dataSource: ListTableViewDataSource = {
         return ListTableViewDataSource(listSource: self)
     }()
+    private lazy var delegate: ListTableViewDelegate = {
+        return ListTableViewDelegate(listDelegate: self)
+    }()
     var sections: [Tasks.List.ViewModel.Section] = []
 
     override func viewDidLoad() {
@@ -23,7 +26,7 @@ class TodoTasksViewController: UIViewController {
         
         dragCoordinator.delegate = self
         tableView.dragInteractionEnabled = true
-        tableView.delegate = self
+        tableView.delegate = delegate
         tableView.dataSource = dataSource
         tableView.dragDelegate = dragCoordinator
         tableView.dropDelegate = dragCoordinator
@@ -52,10 +55,10 @@ extension TodoTasksViewController: TodoTasksDisplayLogic {
 
 extension TodoTasksViewController: TaskListDataSource { }
 
-extension TodoTasksViewController: UITableViewDelegate {
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 60
+extension TodoTasksViewController: TaskListDelegate {
+    func performAction(_ action: Tasks.ViewModel.Task.Action, forTask task: Tasks.ViewModel.Task) {
+        
     }
-
+    
+    
 }

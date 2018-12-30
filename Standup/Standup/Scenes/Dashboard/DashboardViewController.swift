@@ -63,18 +63,18 @@ extension DashboardViewController: TaskListDataSource {
         switch to.section {
         case 0:
             let position = targetPosition(fromIndexPath: to)
-            let request = Dashboard.MoveTaskToYesterday.Request(identifier: task.identifier, position: position)
-            interactor?.moveTaskToYesterday(request: request)
+            let request = Tasks.MoveTask.Request(identifier: task.identifier, target: .yesterday(position))
+            interactor?.moveTask(request: request)
         case 1:
             let position = targetPosition(fromIndexPath: to)
-            let request = Dashboard.MoveTaskToToday.Request(identifier: task.identifier, position: position)
-            interactor?.moveTaskToToday(request: request)
+            let request = Tasks.MoveTask.Request(identifier: task.identifier, target: .today(position))
+            interactor?.moveTask(request: request)
         default:
             return
         }
     }
     
-    private func targetPosition(fromIndexPath indexPath: IndexPath) -> Dashboard.MoveTaskRequest.Position {
+    private func targetPosition(fromIndexPath indexPath: IndexPath) -> Tasks.MoveTask.Position {
         if indexPath.row == 0 {
             return .first
         }
@@ -95,11 +95,14 @@ extension DashboardViewController: TaskListDelegate {
     func performAction(_ action: Tasks.ViewModel.Task.Action, forTask task: Tasks.ViewModel.Task) {
         switch action {
         case .delete:
-            interactor?.deleteTask(request: Dashboard.DeleteTask.Request(identifier: task.identifier))
+            let request = Tasks.MoveTask.Request(identifier: task.identifier, target: .trash)
+            interactor?.moveTask(request: request)
         case .markComplete:
-            interactor?.markTaskAsDone(request: Dashboard.MarkTaskAsDone.Request(identifier: task.identifier))
+            let request = Tasks.MoveTask.Request(identifier: task.identifier, target: .done)
+            interactor?.moveTask(request: request)
         case .markIncomplete:
-            interactor?.markTaskAsTodo(request: Dashboard.MarkTaskAsTodo.Request(identifier: task.identifier))
+            let request = Tasks.MoveTask.Request(identifier: task.identifier, target: .todo)
+            interactor?.moveTask(request: request)
         case .start: break
         }
     }
