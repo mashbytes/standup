@@ -9,22 +9,25 @@ class TodoTasksViewController: UIViewController {
     var router: (NSObjectProtocol & TodoTasksRoutingLogic & TodoTasksDataPassing)?
 
     @IBOutlet private weak var tableView: UITableView!
-    private let tableCoordinator = ListTableViewCoordinator()
+    private let dragCoordinator = ListTableDragCoordinator()
+    private lazy var dataSource: ListTableViewDataSource = {
+        return ListTableViewDataSource(listSource: self)
+    }()
+    var sections: [Tasks.List.ViewModel.Section] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Todo"
-    
-        tableCoordinator.delegate = self
         
         ListTableViewStyle().styleTableView(tableView)
-
+        
+        dragCoordinator.delegate = self
         tableView.dragInteractionEnabled = true
-        tableView.delegate = tableCoordinator
-        tableView.dataSource = tableCoordinator
-        tableView.dragDelegate = tableCoordinator
-        tableView.dropDelegate = tableCoordinator
-        tableCoordinator.prepare(tableView: tableView)
+        tableView.delegate = self
+        tableView.dataSource = dataSource
+        tableView.dragDelegate = dragCoordinator
+        tableView.dropDelegate = dragCoordinator
+        tableView.register(TaskTableViewCell.self)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -34,26 +37,25 @@ class TodoTasksViewController: UIViewController {
 
 }
 
-extension TodoTasksViewController: ListTableViewCoordinatorDelegate {
+extension TodoTasksViewController: ListTableDragCoordinatorDelegate {
     
-    func task(_ task: Tasks.ViewModel.Task, insertedInSection section: Tasks.List.ViewModel.Section) {
-        
-    }
-    
-    func task(_ task: Tasks.ViewModel.Task, deletedFromSection section: Tasks.List.ViewModel.Section) {
-        
-    }
-    
-    func task(_ task: Tasks.ViewModel.Task, movedFrom from: IndexPath, to: IndexPath) {
-        
-    }
 }
 
 extension TodoTasksViewController: TodoTasksDisplayLogic {
     
     func displayTodoTasks(viewModel: TodoTasks.Fetch.ViewModel) {
-        tableCoordinator.sections = [viewModel.section]
+        sections = [viewModel.section]
         tableView.reloadData()
+    }
+
+}
+
+extension TodoTasksViewController: TaskListDataSource { }
+
+extension TodoTasksViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 60
     }
 
 }

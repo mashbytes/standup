@@ -11,22 +11,30 @@ class DashboardViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
 
-    private let tableCoordinator = ListTableViewCoordinator()
+    private let dragCoordinator = ListTableDragCoordinator()
+    private lazy var dataSource: ListTableViewDataSource = {
+        return ListTableViewDataSource(listSource: self)
+    }()
+    private lazy var delegate: ListTableViewDelegate = {
+        return ListTableViewDelegate(listDelegate: self)
+    }()
+
+    var sections: [Tasks.List.ViewModel.Section] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         title = "Dashboard"
         
-        tableCoordinator.delegate = self
         ListTableViewStyle().styleTableView(tableView)
 
+        dragCoordinator.delegate = self
         tableView.dragInteractionEnabled = true
-        tableView.delegate = tableCoordinator
-        tableView.dataSource = tableCoordinator
-        tableView.dragDelegate = tableCoordinator
-        tableView.dropDelegate = tableCoordinator
-        tableCoordinator.prepare(tableView: tableView)
+        tableView.delegate = delegate
+        tableView.dataSource = dataSource
+        tableView.dragDelegate = dragCoordinator
+        tableView.dropDelegate = dragCoordinator
+        tableView.register(TaskTableViewCell.self)
 
     }
 
@@ -34,30 +42,23 @@ class DashboardViewController: UIViewController {
         super.viewWillAppear(animated)
         interactor?.fetchTasks(request: Dashboard.FetchTasks.Request())
     }
-    
 
 }
 
 extension DashboardViewController: DashboardDisplayLogic {
     
     func displayTasks(viewModel: Dashboard.FetchTasks.ViewModel) {
-        tableCoordinator.sections = viewModel.sections
+        sections = viewModel.sections
         tableView.reloadData()
     }
     
 }
 
-extension DashboardViewController: ListTableViewCoordinatorDelegate {
-    
-    func task(_ task: Tasks.ViewModel.Task, insertedInSection section: Tasks.List.ViewModel.Section) {
-        
-    }
-    
-    func task(_ task: Tasks.ViewModel.Task, deletedFromSection section: Tasks.List.ViewModel.Section) {
-        
-    }
-    
-    func task(_ task: Tasks.ViewModel.Task, movedFrom from: IndexPath, to: IndexPath) {
+extension DashboardViewController: ListTableDragCoordinatorDelegate { }
+
+extension DashboardViewController: TaskListDataSource {
+
+    func didMoveTask(_ task: Tasks.ViewModel.Task, from: IndexPath, to: IndexPath) {
         // todo don't like this being magic number based
         switch to.section {
         case 0:
@@ -77,7 +78,7 @@ extension DashboardViewController: ListTableViewCoordinatorDelegate {
         if indexPath.row == 0 {
             return .first
         }
-        let tasks = tableCoordinator.sections[indexPath.section].tasks
+        let tasks = sections[indexPath.section].tasks
         if indexPath.row == tasks.count - 1 {
             return .last
         }
@@ -86,5 +87,23 @@ extension DashboardViewController: ListTableViewCoordinatorDelegate {
         return .between(before.identifier, after.identifier)
         
     }
+
 }
+
+extension DashboardViewController: TaskListDelegate {
+    
+    func performAction(_ action: Tasks.ViewModel.Task.Action, forTask task: Tasks.ViewModel.Task) {
+        switch action {
+        case .delete:
+            interactor?.deleteTask(request: Dashboard.DeleteTask.Request(identifier: task.identifier))
+        case .markComplete:
+            interactor?.markTaskAsDone(request: Dashboard.MarkTaskAsDone.Request(identifier: task.identifier))
+        case .markIncomplete:
+            interactor?.markTaskAsTodo(request: Dashboard.MarkTaskAsTodo.Request(identifier: task.identifier))
+        case .start: break
+        }
+    }
+
+}
+
 

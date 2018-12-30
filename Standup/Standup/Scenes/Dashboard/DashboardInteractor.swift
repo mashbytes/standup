@@ -148,7 +148,7 @@ extension DashboardInteractor: DashboardBusinessLogic {
         guard let task = taskForIdentifier(request.identifier) else {
             return
         }
-        let toUpdate = task.withStatus(.todo)
+        let toUpdate = task.withStatus(.wip)
         taskService?.update(toUpdate) { result in
             switch result {
             case .success(let updated):
