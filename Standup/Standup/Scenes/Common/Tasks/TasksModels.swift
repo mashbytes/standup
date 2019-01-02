@@ -17,9 +17,9 @@ struct Tasks {
             }
             
             enum Action: Int, Codable {
-                case start
-                case markComplete
-                case markIncomplete
+                case wip
+                case done
+                case todo
                 case delete
             }
         }
@@ -54,28 +54,4 @@ struct Tasks {
         typealias TaskIdentifier = Task.ID
     }
     
-    struct MoveTask {
-        
-        enum Target {
-            case todo
-            case yesterday(Position)
-            case today(Position)
-            case done
-            case trash
-        }
-        
-        enum Position {
-            case first
-            case between(Tasks.DataPassing.TaskIdentifier, Tasks.DataPassing.TaskIdentifier)
-            case last
-        }
-        
-        struct Request {
-            let identifier: Tasks.DataPassing.TaskIdentifier
-            let target: Target
-        }
-        
-        typealias Response = List.Response
-        
-    }
 }

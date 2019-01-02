@@ -2,45 +2,62 @@ import Foundation
 
 protocol MoveTaskToTodayBusinessLogic {
 
-    func moveTask(_ task: Task, toTodayPositionedAt position: Tasks.MoveTask.Position)
+    func moveTaskToToday(request: MoveTask.ToToday.Request)
     
 }
 
-protocol DefaultMoveTaskToTodayBusinessLogic: MoveTaskToTodayBusinessLogic {
+protocol DefaultMoveTaskToTodayBusinessLogic: class, MoveTaskToTodayBusinessLogic, ProvidesAllTasks, FiltersTodayTasks {
     
-    var tasks: [Task] { get }
-    var taskReorderer: TaskReorderer { get }
+    var taskReorderer: TaskReorderer? { get }
+    var taskService: TaskService? { get }
 
-    func didMoveTask(_ task: Task, causingTasksToBeUpdated updated: [Task])
+    func updatedStatus(forTaskMovedToToday task: Task) -> Task.Status
+    func didMoveTask(_ task: Task, toTodayCausingUpdatesTo updated: [Task])
+    func didntMoveTask(_ task: Task, toTodayDueTo error: Error)
 }
 
-extension DefaultMoveTaskToTodayBusinessLogic {
+extension DefaultMoveTaskToTodayBusinessLogic where Self: TaskDataStore {
     
-    var today: [Task] {
-        return tasks
-            .filter { task in
-                switch task.status {
-                case .done(let date) where Calendar.current.isDateInToday(date): return true
-                case .wip: return true
-                default: return false
-                }
-            }
-            .sortedByOrder()
-    }
-    
-    func moveTask(_ task: Task, toTodayPositionedAt position: Tasks.MoveTask.Position) {
-        func updatedStatus() -> Task.Status {
-            switch task.status {
-            case .done: return .done(Date())
-            default: return .wip
+    func moveTaskToToday(request: MoveTask.ToToday.Request) {
+        guard let task = taskForIdentifier(request.identifier) else {
+            return
+        }
+
+        let today = todayTasks(from: tasks)
+        let status = updatedStatus(forTaskMovedToToday: task)
+        
+        let toUpdate = taskReorderer?.reorderTasks(today, toInclude: task, atPosition: request.position) {
+            return $0.withStatus(status)
+        } ?? []
+        
+        taskService?.batchUpdate(toUpdate) { result in
+            switch result {
+            case .success(let updated):
+                self.didMoveTask(task, toTodayCausingUpdatesTo: updated)
+            case .failure(let error):
+                self.didntMoveTask(task, toTodayDueTo: error)
             }
         }
-        
-        let toUpdate = taskReorderer.reorderTasks(today, toInclude: task, atPosition: position) {
-            return $0.withStatus(updatedStatus())
-        }
-        
-        didMoveTask(task, causingTasksToBeUpdated: toUpdate)
+    }
+
+    func updatedStatus(forTaskMovedToToday task: Task) -> Task.Status {
+        return .wip
+    }
+}
+
+extension DefaultMoveTaskToTodayBusinessLogic where Self: KeyedTasksDataStore {
+    
+    func didMoveTask(_ task: Task, toTodayCausingUpdatesTo updated: [Task]) {
+        keyedTasks += updated.toKeyedDictionary()
     }
 
 }
+
+extension MoveTask {
+    
+    struct ToToday {
+        typealias Request = MoveTask.MoveTaskPositionalRequest
+    }
+    
+}
+

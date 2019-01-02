@@ -2,7 +2,7 @@ import Foundation
 
 protocol TaskReorderer {
     
-    func reorderTasks(_ tasks: [Task], toInclude task: Task, atPosition position: Tasks.MoveTask.Position, applyingTransformation transformer: (Task) -> Task) -> [Task]
+    func reorderTasks(_ tasks: [Task], toInclude task: Task, atPosition position: MoveTask.Position, applyingTransformation transformer: (Task) -> Task) -> [Task]
     
 }
 
@@ -10,7 +10,7 @@ struct DefaultTaskReorderer: TaskReorderer {
     
     let dataStore: TaskDataStore
     
-    func reorderTasks(_ tasks: [Task], toInclude task: Task, atPosition position: Tasks.MoveTask.Position, applyingTransformation transformer: (Task) -> Task) -> [Task] {
+    func reorderTasks(_ tasks: [Task], toInclude task: Task, atPosition position: MoveTask.Position, applyingTransformation transformer: (Task) -> Task) -> [Task] {
         let ordered = Set(tasks).subtracting([task]).sortedByOrder()
         let updatedTask = transformer(task)
         
@@ -19,11 +19,11 @@ struct DefaultTaskReorderer: TaskReorderer {
             case .first: return ([updatedTask] + ordered)
             case .between(let after, let before):
                 guard let afterTask = dataStore.taskForIdentifier(after), let beforeTask = dataStore.taskForIdentifier(before) else {
-                    return ordered
+                    return [updatedTask] + ordered
                 }
                 
                 guard let afterIndex = ordered.firstIndex(of: afterTask), let beforeIndex = ordered.firstIndex(of: beforeTask) else {
-                    return ordered
+                    return [updatedTask] + ordered
                 }
                 
                 return Array(ordered.prefix(through: afterIndex) + [updatedTask] + ordered.suffix(from: beforeIndex))

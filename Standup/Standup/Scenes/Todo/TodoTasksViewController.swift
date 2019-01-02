@@ -56,8 +56,23 @@ extension TodoTasksViewController: TodoTasksDisplayLogic {
 extension TodoTasksViewController: TaskListDataSource { }
 
 extension TodoTasksViewController: TaskListDelegate {
-    func performAction(_ action: Tasks.ViewModel.Task.Action, forTask task: Tasks.ViewModel.Task) {
-        
+    
+    func performAction(_ action: Tasks.ViewModel.Task.Action, forTask task: Tasks.ViewModel.Task, atIndexPath indexPath: IndexPath) {
+        switch action {
+        case .delete:
+            let request = MoveTask.ToTrash.Request(identifier: task.identifier)
+            interactor?.moveTaskToTrash(request: request)
+        case .done:
+            let position = targetPosition(fromIndexPath: indexPath)
+            let request = MoveTask.ToDone.Request(identifier: task.identifier, position: position)
+            interactor?.moveTaskToDone(request: request)
+        case .todo:
+            break
+        case .wip:
+            let request = MoveTask.ToToday.Request(identifier: task.identifier, position: .first)
+            interactor?.moveTaskToToday(request: request)
+        }
+
     }
     
     

@@ -2,38 +2,59 @@ import Foundation
 
 protocol MoveTaskToYesterdayBusinessLogic {
     
-    func moveTask(_ task: Task, toYesterdayPositionedAt position: Tasks.MoveTask.Position)
+    func moveTaskToYesterday(request: MoveTask.ToYesterday.Request)
 
 }
 
-
-protocol DefaultMoveTaskToYesterdayBusinessLogic: MoveTaskToYesterdayBusinessLogic {
+protocol DefaultMoveTaskToYesterdayBusinessLogic: MoveTaskToYesterdayBusinessLogic, FiltersYesterdayTasks {
     
     var tasks: [Task] { get }
-    var taskReorderer: TaskReorderer { get }
+    var taskReorderer: TaskReorderer? { get }
+    var taskService: TaskService? { get }
     
-    func didMoveTask(_ task: Task, causingTasksToBeUpdated updated: [Task])
+    func didMoveTask(_ task: Task, toYesterdayCausingUpdatesTo updated: [Task])
+    func didntMoveTask(_ task: Task, toYesterdayDueTo error: Error)
 }
 
-extension DefaultMoveTaskToYesterdayBusinessLogic {
+extension DefaultMoveTaskToYesterdayBusinessLogic where Self: TaskDataStore {
     
-    var yesterday: [Task] {
-        return tasks
-            .filter { task in
-                switch task.status {
-                case .done(let date) where Calendar.current.isDateInYesterday(date): return true
-                default: return false
-                }
-            }
-            .sortedByOrder()
-    }
-
-    func moveTask(_ task: Task, toYesterdayPositionedAt position: Tasks.MoveTask.Position) {
-        let toUpdate = taskReorderer.reorderTasks(yesterday, toInclude: task, atPosition: position) {
-            return $0.withCompletedDate(Date().addingTimeInterval(-1.days))
+    func moveTaskToYesterday(request: MoveTask.ToYesterday.Request) {
+        guard let task = taskForIdentifier(request.identifier) else {
+            return
         }
         
-        didMoveTask(task, causingTasksToBeUpdated: toUpdate)
+        let yesterday = yesterdayTasks(from: tasks)
+        
+        let toUpdate = taskReorderer?.reorderTasks(yesterday, toInclude: task, atPosition: request.position) {
+            return $0.withCompletedDate(Date().addingTimeInterval(-1.days))
+        } ?? []
+        
+        taskService?.batchUpdate(toUpdate) { result in
+            switch result {
+            case .success(let updated):
+                self.didMoveTask(task, toYesterdayCausingUpdatesTo: updated)
+            case .failure(let error):
+                self.didntMoveTask(task, toYesterdayDueTo: error)
+            }
+        }
     }
 
 }
+
+extension DefaultMoveTaskToYesterdayBusinessLogic where Self: KeyedTasksDataStore {
+    
+    func didMoveTask(_ task: Task, toYesterdayCausingUpdatesTo updated: [Task]) {
+        keyedTasks += updated.toKeyedDictionary()
+    }
+    
+}
+
+
+extension MoveTask {
+    
+    struct ToYesterday {
+        typealias Request = MoveTask.MoveTaskPositionalRequest
+    }
+    
+}
+

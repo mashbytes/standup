@@ -63,18 +63,18 @@ extension DashboardViewController: TaskListDataSource {
         switch to.section {
         case 0:
             let position = targetPosition(fromIndexPath: to)
-            let request = Tasks.MoveTask.Request(identifier: task.identifier, target: .yesterday(position))
-            interactor?.moveTask(request: request)
+            let request = MoveTask.ToYesterday.Request(identifier: task.identifier, position: position)
+            interactor?.moveTaskToYesterday(request: request)
         case 1:
             let position = targetPosition(fromIndexPath: to)
-            let request = Tasks.MoveTask.Request(identifier: task.identifier, target: .today(position))
-            interactor?.moveTask(request: request)
+            let request = MoveTask.ToToday.Request(identifier: task.identifier, position: position)
+            interactor?.moveTaskToToday(request: request)
         default:
             return
         }
     }
     
-    private func targetPosition(fromIndexPath indexPath: IndexPath) -> Tasks.MoveTask.Position {
+    private func targetPosition(fromIndexPath indexPath: IndexPath) -> MoveTask.Position {
         if indexPath.row == 0 {
             return .first
         }
@@ -92,21 +92,26 @@ extension DashboardViewController: TaskListDataSource {
 
 extension DashboardViewController: TaskListDelegate {
     
-    func performAction(_ action: Tasks.ViewModel.Task.Action, forTask task: Tasks.ViewModel.Task) {
+    func performAction(_ action: Tasks.ViewModel.Task.Action, forTask task: Tasks.ViewModel.Task, atIndexPath indexPath: IndexPath) {
         switch action {
         case .delete:
-            let request = Tasks.MoveTask.Request(identifier: task.identifier, target: .trash)
-            interactor?.moveTask(request: request)
-        case .markComplete:
-            let request = Tasks.MoveTask.Request(identifier: task.identifier, target: .done)
-            interactor?.moveTask(request: request)
-        case .markIncomplete:
-            let request = Tasks.MoveTask.Request(identifier: task.identifier, target: .todo)
-            interactor?.moveTask(request: request)
-        case .start: break
+            let request = MoveTask.ToTrash.Request(identifier: task.identifier)
+            interactor?.moveTaskToTrash(request: request)
+        case .done:
+            let position = targetPosition(fromIndexPath: indexPath)
+            let request = MoveTask.ToDone.Request(identifier: task.identifier, position: position)
+            interactor?.moveTaskToDone(request: request)
+        case .todo:
+            let position = targetPosition(fromIndexPath: indexPath)
+            let request = MoveTask.ToTodo.Request(identifier: task.identifier, position: position)
+            interactor?.moveTaskToTodo(request: request)
+        case .wip:
+            let position = targetPosition(fromIndexPath: indexPath)
+            let request = MoveTask.ToToday.Request(identifier: task.identifier, position: position)
+            interactor?.moveTaskToToday(request: request)
+            break
         }
     }
 
 }
-
 

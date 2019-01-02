@@ -2,37 +2,59 @@ import Foundation
 
 protocol MoveTaskToDoneBusinessLogic {
     
-    func moveTask(_ task: Task, toDonePositionedAt position: Tasks.MoveTask.Position)
+    func moveTaskToDone(request: MoveTask.ToDone.Request)
 
 }
 
-protocol DefaultMoveTaskToDoneBusinessLogic: MoveTaskToDoneBusinessLogic {
+protocol DefaultMoveTaskToDoneBusinessLogic: MoveTaskToDoneBusinessLogic, ProvidesAllTasks, FiltersDoneTasks {
     
-    var tasks: [Task] { get }
-    var taskReorderer: TaskReorderer { get }
-    
-    func didMoveTask(_ task: Task, causingTasksToBeUpdated updated: [Task])
+    var taskReorderer: TaskReorderer? { get }
+    var taskService: TaskService? { get }
+
+    func didMoveTask(_ task: Task, toDoneCausingUpdatesTo updated: [Task])
+    func didntMoveTask(_ task: Task, toDoneDueTo error: Error)
 
 }
 
-extension DefaultMoveTaskToDoneBusinessLogic {
+extension DefaultMoveTaskToDoneBusinessLogic where Self: TaskDataStore {
     
-    var done: [Task] {
-        return tasks
-            .filter { task in
-                switch task.status {
-                case .done: return true
-                default: return false
-                }
-            }
-            .sortedByOrder()
-    }
-
-    func moveTask(_ task: Task, toDonePositionedAt position: Tasks.MoveTask.Position) {
-        let toUpdate = taskReorderer.reorderTasks(done, toInclude: task, atPosition: position) {
-            return $0.withCompletedDate(Date())
+    func moveTaskToDone(request: MoveTask.ToDone.Request) {
+        guard let task = taskForIdentifier(request.identifier) else {
+            return
         }
         
-        didMoveTask(task, causingTasksToBeUpdated: toUpdate)
+        let done = doneTasks(from: tasks)
+
+        let toUpdate = taskReorderer?.reorderTasks(done, toInclude: task, atPosition: request.position) {
+            return $0.withCompletedDate(Date())
+        } ?? []
+        
+        taskService?.batchUpdate(toUpdate) { result in
+            switch result {
+            case .success(let updated):
+                self.didMoveTask(task, toDoneCausingUpdatesTo: updated)
+            case .failure(let error):
+                self.didntMoveTask(task, toDoneDueTo: error)
+            }
+        }
+
     }
+
 }
+
+extension DefaultMoveTaskToDoneBusinessLogic where Self: KeyedTasksDataStore {
+    
+    func didMoveTask(_ task: Task, toDoneCausingUpdatesTo updated: [Task]) {
+        keyedTasks += updated.toKeyedDictionary()
+    }
+    
+}
+
+extension MoveTask {
+    
+    struct ToDone {
+        typealias Request = MoveTask.MoveTaskPositionalRequest
+    }
+    
+}
+

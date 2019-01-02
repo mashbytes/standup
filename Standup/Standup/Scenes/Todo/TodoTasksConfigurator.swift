@@ -10,7 +10,7 @@ class TodoTasksConfigurator: ControllerConfigurator {
         target.interactor = interactor
         target.router = router
         interactor.presenter = presenter
-        interactor.taskService = InMemoryTaskService(initial: [FakeTasks.todo(), FakeTasks.todo()])
+        interactor.taskService = InMemoryTaskService.shared
         presenter.display = target
         router.viewController = target
         router.dataStore = interactor

@@ -54,7 +54,7 @@ extension Task {
 
 extension Array where Element == Task {
     
-    func toIdentifiableTasks() -> [(Tasks.DataPassing.TaskIdentifier, Task)] {
+    func toIdentifiableTasks() -> [Tasks.IdentifiableTask] {
         return self.map { ($0.id, $0) }
     }
 }

@@ -9,7 +9,7 @@ enum TodoTasks {
     enum Fetch {
         struct Request { }
         struct Response {
-            let tasks: [(DataPassing.TaskIdentifier, Task)]
+            let tasks: [Tasks.IdentifiableTask]
         }
         struct ViewModel {
             typealias Section = Tasks.List.ViewModel.Section

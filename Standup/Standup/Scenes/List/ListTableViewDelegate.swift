@@ -16,16 +16,16 @@ class ListTableViewDelegate: NSObject, UITableViewDelegate {
         return task.actions.map { action in
             switch action {
             case .delete: return UITableViewRowAction(style: .destructive, title: "Delete") { _, _ in
-                self.delegate?.performAction(.delete, forTask: task)
+                self.delegate?.performAction(.delete, forTask: task, atIndexPath: indexPath)
                 }
-            case .markComplete: return UITableViewRowAction(style: .destructive, title: "Done") { _, _ in
-                self.delegate?.performAction(.markComplete, forTask: task)
+            case .done: return UITableViewRowAction(style: .normal, title: "Done") { _, _ in
+                self.delegate?.performAction(.done, forTask: task, atIndexPath: indexPath)
                 }
-            case .markIncomplete: return UITableViewRowAction(style: .destructive, title: "Todo") { _, _ in
-                self.delegate?.performAction(.markIncomplete, forTask: task)
+            case .todo: return UITableViewRowAction(style: .normal, title: "Todo") { _, _ in
+                self.delegate?.performAction(.todo, forTask: task, atIndexPath: indexPath)
                 }
-            case .start: return UITableViewRowAction(style: .destructive, title: "Start") { _, _ in
-                self.delegate?.performAction(.start, forTask: task)
+            case .wip: return UITableViewRowAction(style: .normal, title: "WIP") { _, _ in
+                self.delegate?.performAction(.wip, forTask: task, atIndexPath: indexPath)
                 }
             }
         }

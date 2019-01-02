@@ -10,7 +10,7 @@ class DashboardConfigurator: ControllerConfigurator {
         target.interactor = interactor
         target.router = router
         interactor.presenter = presenter
-        interactor.taskService = InMemoryTaskService(initial: [FakeTasks.doneToday(), FakeTasks.wip(), FakeTasks.doneYesterday()])
+        interactor.taskService = InMemoryTaskService.shared
         presenter.display = target
         router.viewController = target
         router.dataStore = interactor
