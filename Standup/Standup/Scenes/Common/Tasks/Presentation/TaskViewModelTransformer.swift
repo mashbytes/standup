@@ -26,7 +26,11 @@ class DefaultTaskViewModelTransformer: TaskViewModelTransformer {
     
     func completedForTask(_ task: Task) -> String? {
         switch task.status {
-        case .done(let date): return date.description
+        case .done(let date):
+            let formatter = DateFormatter()
+            formatter.dateStyle = .full
+            formatter.timeStyle = .none
+            return formatter.string(from: date)
         default: return nil
         }
     }
@@ -37,7 +41,14 @@ extension Array where Element == Tasks.IdentifiableTask {
     
     func toViewModels(usingTransformer transformer: TaskViewModelTransformer = DefaultTaskViewModelTransformer()) -> [Tasks.ViewModel.Task] {
         return self
-            .sorted { t1, t2 in return t1.1.order < t2.1.order }
+            .sorted { t1, t2 in
+                let task1 = t1.1
+                let task2 = t2.1
+                if case .done(let date1) = task1.status, case .done(let date2) = task2.status {
+                    return date1 > date2
+                }
+                return task1.order < task2.order
+            }
             .compactMap { return transformer.transform(task: $0) }
     }
 }

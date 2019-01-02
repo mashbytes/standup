@@ -22,16 +22,31 @@ struct FakeTasks {
         return Task(id: identifier, title: identifier, status: .done(yesterday), order: 0)
     }
     
+    static func doneDaysAgo(_ days: Int) -> Task {
+        let identifier = FakeTasks.IdentifierCache.nextDone()
+        let date = daysInPast(days)
+        return Task(id: identifier, title: identifier, status: .done(date), order: 0)
+    }
+
+    
     private static var today: Date {
         return Date()
     }
     
+    private static func daysInPast(_ days: Int) -> Date {
+        return Calendar.current.date(byAdding: .day, value: -days, to: Date())!
+    }
+    
+    private static func daysInFuture(_ days: Int) -> Date {
+        return Calendar.current.date(byAdding: .day, value: days, to: Date())!
+    }
+    
     private static var yesterday: Date {
-        return Calendar.current.date(byAdding: .day, value: -1, to: Date())!
+        return daysInPast(1)
     }
     
     private static var tomorrow: Date {
-        return Calendar.current.date(byAdding: .day, value: 1, to: Date())!
+        return daysInFuture(1)
     }
     
     struct IdentifierCache {

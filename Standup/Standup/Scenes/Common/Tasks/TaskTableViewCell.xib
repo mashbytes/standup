@@ -29,11 +29,17 @@
                                 </constraints>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="8z6-o9-pdR">
-                                <rect key="frame" x="70" y="53.5" width="42" height="20.5"/>
+                                <rect key="frame" x="70" y="42.5" width="42" height="43"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xSj-SF-y9p">
                                         <rect key="frame" x="0.0" y="0.0" width="42" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7fr-Oq-lHY">
+                                        <rect key="frame" x="0.0" y="28.5" width="31" height="14.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -61,6 +67,7 @@
             <connections>
                 <outlet property="container" destination="Xq5-sP-7gz" id="OS0-2P-MxQ"/>
                 <outlet property="icon" destination="jNY-jm-Wj0" id="VKO-Wo-yaR"/>
+                <outlet property="subtitleLabel" destination="7fr-Oq-lHY" id="47B-7o-akm"/>
                 <outlet property="titleLabel" destination="xSj-SF-y9p" id="I51-2R-os5"/>
             </connections>
             <point key="canvasLocation" x="236" y="111.54422788605699"/>

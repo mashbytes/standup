@@ -17,8 +17,8 @@ class HomeViewController: UITabBarController {
             if let todoVC = vc as? TodoTasksViewController {
                 TodoTasksConfigurator().configure(todoVC)
             }
-            if let doneVC = vc as? CompletedTasksViewController {
-                CompletedTasksConfigurator().configure(doneVC)
+            if let doneVC = vc as? DoneTasksViewController {
+                DoneTasksConfigurator().configure(doneVC)
             }
         }
         selectedIndex = 1

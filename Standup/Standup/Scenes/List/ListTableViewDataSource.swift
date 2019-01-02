@@ -30,7 +30,7 @@ class ListTableViewDataSource: NSObject, UITableViewDataSource {
         guard let task = source?.taskAtIndexPath(indexPath) else {
             return cell
         }
-        let model = TaskTableViewCellModel(title: task.title, showTick: task.isCompleted)
+        let model = TaskTableViewCellModel(title: task.title, subtitle: task.completedDate, showTick: task.isCompleted)
         cell.displayModel(model)
         return cell
     }

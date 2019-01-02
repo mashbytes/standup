@@ -2,7 +2,7 @@ import Foundation
 
 class InMemoryTaskService: TaskService {
     
-    static var shared = InMemoryTaskService(initial: [FakeTasks.todo(), FakeTasks.todo(), FakeTasks.doneToday(), FakeTasks.wip(), FakeTasks.doneYesterday()])
+    static var shared = InMemoryTaskService(initial: [FakeTasks.todo(), FakeTasks.todo(), FakeTasks.doneToday(), FakeTasks.doneDaysAgo(5), FakeTasks.wip(), FakeTasks.doneYesterday()])
     
     private var tasks: [Task.ID: Task] = [:]
     

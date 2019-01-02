@@ -20,7 +20,7 @@
                     <connections>
                         <segue destination="96V-SO-vdc" kind="relationship" relationship="viewControllers" id="4VG-d2-iDM"/>
                         <segue destination="vCb-rX-sPo" kind="relationship" relationship="viewControllers" id="JjH-cs-gE7"/>
-                        <segue destination="ab6-gJ-lTY" kind="relationship" relationship="viewControllers" id="O0e-57-RQ4"/>
+                        <segue destination="XZ5-tb-CWc" kind="relationship" relationship="viewControllers" id="724-qE-o7u"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ymc-ou-iEm" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -31,7 +31,7 @@
         <scene sceneID="I96-7t-8nk">
             <objects>
                 <viewControllerPlaceholder storyboardName="TodoTasks" id="96V-SO-vdc" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="FBE-ev-ijR"/>
+                    <tabBarItem key="tabBarItem" title="Todo" id="FBE-ev-ijR"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x61-OZ-e8O" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -41,21 +41,21 @@
         <scene sceneID="mk1-gn-Waw">
             <objects>
                 <viewControllerPlaceholder storyboardName="Dashboard" id="vCb-rX-sPo" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="7OW-ct-fzq"/>
+                    <tabBarItem key="tabBarItem" title="Dashboard" id="7OW-ct-fzq"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dEv-NO-9FY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1675" y="-864"/>
         </scene>
-        <!--CompletedTasks-->
-        <scene sceneID="S4G-UZ-GaJ">
+        <!--DoneTasks-->
+        <scene sceneID="Mx7-kB-SfH">
             <objects>
-                <viewControllerPlaceholder storyboardName="CompletedTasks" id="ab6-gJ-lTY" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="A0f-aF-lMp"/>
+                <viewControllerPlaceholder storyboardName="DoneTasks" id="XZ5-tb-CWc" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Done" id="5eY-ct-Ibr"/>
                 </viewControllerPlaceholder>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="W9S-Gr-iUg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Kb2-KD-Nu3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1729" y="-708"/>
+            <point key="canvasLocation" x="-1855" y="-741"/>
         </scene>
     </scenes>
 </document>
