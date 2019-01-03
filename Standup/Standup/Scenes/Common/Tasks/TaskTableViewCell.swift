@@ -16,6 +16,7 @@ class TaskTableViewCell: UITableViewCell, ProvidesNib {
     override func awakeFromNib() {
         super.awakeFromNib()
         backgroundColor = .clear
+        selectionStyle = .none
         icon.contentMode = .center
         icon.image = UIImage(named: "tick")?.withRenderingMode(.alwaysTemplate)
         icon.tintColor = .green
