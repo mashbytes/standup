@@ -13,3 +13,15 @@ protocol TaskService {
 enum TaskServiceError: Error {
     case notFound
 }
+
+extension ServiceLocator {
+    
+    func registerTaskService(_ service: TaskService) {
+        registerService(service)
+    }
+    
+    func taskService() -> TaskService {
+        return locateService()
+    }
+    
+}

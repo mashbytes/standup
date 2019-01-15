@@ -43,7 +43,7 @@ extension DefaultMoveTaskToTodoBusinessLogic where Self: TaskDataStore {
     }
 
     func updatedStatus(forTaskMovedToTodo task: Task) -> Task.Status {
-        return .todo
+        return .todo(Date())
     }
 
 }

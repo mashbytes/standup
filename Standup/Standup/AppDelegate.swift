@@ -5,7 +5,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-    private var delegates: [UIApplicationDelegate] = []
+    private var delegates: [UIApplicationDelegate] = [
+        AWSAppSyncBootstrap()
+    ]
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         return delegates.application(application, didFinishLaunchingWithOptions: launchOptions)

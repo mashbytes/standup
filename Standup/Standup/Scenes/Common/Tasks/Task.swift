@@ -8,23 +8,20 @@ struct Task: Hashable {
     let title: String
     let status: Status
     let order: Int
+    var date: Date {
+        return status.date
+    }
     
-//    var order: Int {
-//        switch status {
-//        case .todo(let order),
-//             .wip(let order):
-//            return order
-//        case .done(let date):
-//            return Int(date.timeIntervalSince1970.truncatingRemainder(dividingBy: Double(Int.max)))
-//        }
-//    }
-//
-//    typealias SortOrder = Int
-//
     enum Status: Hashable {
-        case todo
-        case wip
+        case todo(Date)
+        case wip(Date)
         case done(Date)
+        
+        var date: Date {
+            switch self {
+            case .done(let date), .wip(let date), .todo(let date): return date
+            }
+        }
     }
     
 }

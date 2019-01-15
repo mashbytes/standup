@@ -10,7 +10,7 @@ class DashboardConfigurator: ControllerConfigurator {
         target.interactor = interactor
         target.router = router
         interactor.presenter = presenter
-        interactor.taskService = InMemoryTaskService.shared
+        interactor.taskService = ServiceLocator.shared.taskService()
         presenter.display = target
         router.viewController = target
         router.dataStore = interactor

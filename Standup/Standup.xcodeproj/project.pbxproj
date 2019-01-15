@@ -95,6 +95,11 @@
 		60DF428021DD56FA0041EC9E /* DoneTasksInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60DF427A21DD56FA0041EC9E /* DoneTasksInteractor.swift */; };
 		60DF428121DD56FA0041EC9E /* DoneTasksConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60DF427B21DD56FA0041EC9E /* DoneTasksConfigurator.swift */; };
 		60DF428321DD57050041EC9E /* DoneTasks.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 60DF428221DD57050041EC9E /* DoneTasks.storyboard */; };
+		60DF428B21E13F5A0041EC9E /* awsconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = 60DF428921E13F5A0041EC9E /* awsconfiguration.json */; };
+		60DF428C21E13F5A0041EC9E /* AWSAppSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60DF428A21E13F5A0041EC9E /* AWSAppSync.swift */; };
+		60DF428E21E13F700041EC9E /* AWSAppSyncBootstrap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60DF428D21E13F700041EC9E /* AWSAppSyncBootstrap.swift */; };
+		60DF429121E13FF90041EC9E /* ServiceLocator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60DF429021E13FF90041EC9E /* ServiceLocator.swift */; };
+		60DF429721E1FE190041EC9E /* AWSTaskService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60DF429621E1FE190041EC9E /* AWSTaskService.swift */; };
 		985B87B6B77CA2FB7BB0365C /* Pods_StandupTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8169D140B18DDD84396C75C9 /* Pods_StandupTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -211,6 +216,11 @@
 		60DF427A21DD56FA0041EC9E /* DoneTasksInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoneTasksInteractor.swift; sourceTree = "<group>"; };
 		60DF427B21DD56FA0041EC9E /* DoneTasksConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoneTasksConfigurator.swift; sourceTree = "<group>"; };
 		60DF428221DD57050041EC9E /* DoneTasks.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DoneTasks.storyboard; sourceTree = "<group>"; };
+		60DF428921E13F5A0041EC9E /* awsconfiguration.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = awsconfiguration.json; sourceTree = "<group>"; };
+		60DF428A21E13F5A0041EC9E /* AWSAppSync.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AWSAppSync.swift; sourceTree = "<group>"; };
+		60DF428D21E13F700041EC9E /* AWSAppSyncBootstrap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWSAppSyncBootstrap.swift; sourceTree = "<group>"; };
+		60DF429021E13FF90041EC9E /* ServiceLocator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceLocator.swift; sourceTree = "<group>"; };
+		60DF429621E1FE190041EC9E /* AWSTaskService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWSTaskService.swift; sourceTree = "<group>"; };
 		8169D140B18DDD84396C75C9 /* Pods_StandupTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_StandupTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8497BE98431B6BE0538BD78A /* Pods-StandupTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StandupTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-StandupTests/Pods-StandupTests.release.xcconfig"; sourceTree = "<group>"; };
 		89E7D95F6F3BDA817978A4BB /* Pods-Standup.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Standup.release.xcconfig"; path = "Pods/Target Support Files/Pods-Standup/Pods-Standup.release.xcconfig"; sourceTree = "<group>"; };
@@ -295,6 +305,7 @@
 		60028BA021AAD0D60073D016 /* Standup */ = {
 			isa = PBXGroup;
 			children = (
+				60DF428F21E13FF00041EC9E /* Services */,
 				60302E0321AAD21F00BFE65C /* Bootstrap */,
 				60302DF521AAD1DE00BFE65C /* Scenes */,
 				60028BA121AAD0D60073D016 /* AppDelegate.swift */,
@@ -341,6 +352,7 @@
 		60302E0321AAD21F00BFE65C /* Bootstrap */ = {
 			isa = PBXGroup;
 			children = (
+				60DF428421E13E400041EC9E /* AWSAppSync */,
 				60302E0421AAD22E00BFE65C /* DefaultControllerNamingStrategy.swift */,
 				60302E0521AAD22E00BFE65C /* DefaultControllerInstantiator.swift */,
 				60302E0621AAD22E00BFE65C /* ControllerNamingStrategy.swift */,
@@ -391,7 +403,6 @@
 				605954F721AAE38500845B0C /* TaskTableViewCell.swift */,
 				605954F821AAE38500845B0C /* TaskTableViewCell.xib */,
 				6059550821ADE63800845B0C /* TasksModels.swift */,
-				6059550A21AE84AE00845B0C /* TaskService.swift */,
 				6059552021B2D65600845B0C /* InMemoryTaskService.swift */,
 				60DE875821C559EB005AA37A /* FakeTasks.swift */,
 			);
@@ -546,6 +557,42 @@
 			path = Done;
 			sourceTree = "<group>";
 		};
+		60DF428421E13E400041EC9E /* AWSAppSync */ = {
+			isa = PBXGroup;
+			children = (
+				60DF428D21E13F700041EC9E /* AWSAppSyncBootstrap.swift */,
+			);
+			path = AWSAppSync;
+			sourceTree = "<group>";
+		};
+		60DF428F21E13FF00041EC9E /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				60DF429221E1FDCB0041EC9E /* Task */,
+				60DF429021E13FF90041EC9E /* ServiceLocator.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		60DF429221E1FDCB0041EC9E /* Task */ = {
+			isa = PBXGroup;
+			children = (
+				60DF429521E1FE0E0041EC9E /* AWS */,
+				6059550A21AE84AE00845B0C /* TaskService.swift */,
+			);
+			path = Task;
+			sourceTree = "<group>";
+		};
+		60DF429521E1FE0E0041EC9E /* AWS */ = {
+			isa = PBXGroup;
+			children = (
+				60DF428A21E13F5A0041EC9E /* AWSAppSync.swift */,
+				60DF428921E13F5A0041EC9E /* awsconfiguration.json */,
+				60DF429621E1FE190041EC9E /* AWSTaskService.swift */,
+			);
+			path = AWS;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -557,6 +604,7 @@
 				60028B9A21AAD0D60073D016 /* Sources */,
 				60028B9B21AAD0D60073D016 /* Frameworks */,
 				60028B9C21AAD0D60073D016 /* Resources */,
+				A6A4FC2CC30955F54D27AB30 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -658,6 +706,7 @@
 				605954F621AAE16B00845B0C /* Dashboard.storyboard in Resources */,
 				605954FA21AAE38500845B0C /* TaskTableViewCell.xib in Resources */,
 				60028BAC21AAD0D80073D016 /* LaunchScreen.storyboard in Resources */,
+				60DF428B21E13F5A0041EC9E /* awsconfiguration.json in Resources */,
 				60028BA921AAD0D80073D016 /* Assets.xcassets in Resources */,
 				60028BA721AAD0D60073D016 /* Root.storyboard in Resources */,
 				60DF428321DD57050041EC9E /* DoneTasks.storyboard in Resources */,
@@ -717,6 +766,30 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		A6A4FC2CC30955F54D27AB30 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Standup/Pods-Standup-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/AWSAppSync/AWSAppSync.framework",
+				"${BUILT_PRODUCTS_DIR}/AWSCore/AWSCore.framework",
+				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift/Reachability.framework",
+				"${BUILT_PRODUCTS_DIR}/SQLite.swift/SQLite.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSAppSync.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSCore.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SQLite.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Standup/Pods-Standup-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		DD5F891E2BADFADF74BCE75E /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -743,6 +816,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				609BFDBB21D934FB0039E45C /* MoveTaskToTodoBusinessLogic.swift in Sources */,
+				60DF429121E13FF90041EC9E /* ServiceLocator.swift in Sources */,
 				6059550B21AE84AE00845B0C /* TaskService.swift in Sources */,
 				60302E1821AAD22E00BFE65C /* DefaultControllerFactory.swift in Sources */,
 				605954E121AAE11200845B0C /* TodoTasksViewController.swift in Sources */,
@@ -751,6 +825,7 @@
 				60302E1421AAD22E00BFE65C /* Array+UIApplicationDelegate.swift in Sources */,
 				6059550521ADE5FE00845B0C /* DeleteTaskBusinessLogic.swift in Sources */,
 				6059552921B3EA3600845B0C /* EditTaskModels.swift in Sources */,
+				60DF428C21E13F5A0041EC9E /* AWSAppSync.swift in Sources */,
 				609BFDCB21DA07940039E45C /* Dictionary+Extensions.swift in Sources */,
 				60DF427E21DD56FA0041EC9E /* DoneTasksModels.swift in Sources */,
 				6059550F21AF2F1600845B0C /* TaskDataStore.swift in Sources */,
@@ -770,6 +845,7 @@
 				60DF427421DBB1140041EC9E /* TaskViewModelTransformer.swift in Sources */,
 				6059551F21AF389200845B0C /* FetchTasksBusinessLogic.swift in Sources */,
 				609BFDB521D931570039E45C /* TaskReorderer.swift in Sources */,
+				60DF429721E1FE190041EC9E /* AWSTaskService.swift in Sources */,
 				6059551821AF370B00845B0C /* CompleteTaskModels.swift in Sources */,
 				609BFDA621D7BEDE0039E45C /* TaskListDataSource.swift in Sources */,
 				60DF427D21DD56FA0041EC9E /* DoneTasksRouter.swift in Sources */,
@@ -810,6 +886,7 @@
 				60DE875921C559EB005AA37A /* FakeTasks.swift in Sources */,
 				605954BA21AAD63700845B0C /* HomeRouter.swift in Sources */,
 				6059552621B3E88C00845B0C /* AddTaskBusinessLogic.swift in Sources */,
+				60DF428E21E13F700041EC9E /* AWSAppSyncBootstrap.swift in Sources */,
 				60302E1521AAD22E00BFE65C /* ControllerFactory.swift in Sources */,
 				605954F421AAE16100845B0C /* DashboardConfigurator.swift in Sources */,
 				60302E1321AAD22E00BFE65C /* ControllerConfigurator.swift in Sources */,

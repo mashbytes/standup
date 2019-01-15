@@ -41,7 +41,7 @@ extension DefaultMoveTaskToTodayBusinessLogic where Self: TaskDataStore {
     }
 
     func updatedStatus(forTaskMovedToToday task: Task) -> Task.Status {
-        return .wip
+        return .wip(Date())
     }
 }
 

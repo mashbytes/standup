@@ -4,12 +4,12 @@ struct FakeTasks {
     
     static func todo() -> Task {
         let identifier = FakeTasks.IdentifierCache.nextTodo()
-        return Task(id: identifier, title: identifier, status: .todo, order: 0)
+        return Task(id: identifier, title: identifier, status: .todo(Date()), order: 0)
     }
     
     static func wip() -> Task {
         let identifier = FakeTasks.IdentifierCache.nextWIP()
-        return Task(id: identifier, title: identifier, status: .wip, order: 0)
+        return Task(id: identifier, title: identifier, status: .wip(Date()), order: 0)
     }
     
     static func doneToday() -> Task {
