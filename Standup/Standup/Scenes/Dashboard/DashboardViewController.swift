@@ -35,6 +35,9 @@ class DashboardViewController: UIViewController {
         tableView.dragDelegate = dragCoordinator
         tableView.dropDelegate = dragCoordinator
         tableView.register(TaskTableViewCell.self)
+        
+        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonTapped))
+        navigationItem.setRightBarButton(addButton, animated: true)
 
     }
 
@@ -43,6 +46,10 @@ class DashboardViewController: UIViewController {
         interactor?.fetchTasks(request: Dashboard.FetchTasks.Request())
     }
 
+    @objc
+    private func addButtonTapped() {
+        router?.routeToAddTask()
+    }
 }
 
 extension DashboardViewController: DashboardDisplayLogic {

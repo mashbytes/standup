@@ -10,7 +10,6 @@
 		042ADE2020483CEA249283D3 /* Pods_StandupUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FB476518460A248BF624D20 /* Pods_StandupUITests.framework */; };
 		1B83B026085D4C89E51693A6 /* Pods_Standup.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA3C418384D695A47CB4357C /* Pods_Standup.framework */; };
 		60028BA221AAD0D60073D016 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60028BA121AAD0D60073D016 /* AppDelegate.swift */; };
-		60028BA721AAD0D60073D016 /* Root.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 60028BA521AAD0D60073D016 /* Root.storyboard */; };
 		60028BA921AAD0D80073D016 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 60028BA821AAD0D80073D016 /* Assets.xcassets */; };
 		60028BAC21AAD0D80073D016 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 60028BAA21AAD0D80073D016 /* LaunchScreen.storyboard */; };
 		60028BB721AAD0D80073D016 /* StandupTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60028BB621AAD0D80073D016 /* StandupTests.swift */; };
@@ -126,7 +125,6 @@
 		57930C21DE86858F30EECD6A /* Pods-StandupUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StandupUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-StandupUITests/Pods-StandupUITests.release.xcconfig"; sourceTree = "<group>"; };
 		60028B9E21AAD0D60073D016 /* Standup.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Standup.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		60028BA121AAD0D60073D016 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		60028BA621AAD0D60073D016 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Root.storyboard; sourceTree = "<group>"; };
 		60028BA821AAD0D80073D016 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		60028BAB21AAD0D80073D016 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		60028BAD21AAD0D80073D016 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -309,7 +307,6 @@
 				60302E0321AAD21F00BFE65C /* Bootstrap */,
 				60302DF521AAD1DE00BFE65C /* Scenes */,
 				60028BA121AAD0D60073D016 /* AppDelegate.swift */,
-				60028BA521AAD0D60073D016 /* Root.storyboard */,
 				60028BA821AAD0D80073D016 /* Assets.xcassets */,
 				60028BAA21AAD0D80073D016 /* LaunchScreen.storyboard */,
 				60028BAD21AAD0D80073D016 /* Info.plist */,
@@ -708,7 +705,6 @@
 				60028BAC21AAD0D80073D016 /* LaunchScreen.storyboard in Resources */,
 				60DF428B21E13F5A0041EC9E /* awsconfiguration.json in Resources */,
 				60028BA921AAD0D80073D016 /* Assets.xcassets in Resources */,
-				60028BA721AAD0D60073D016 /* Root.storyboard in Resources */,
 				60DF428321DD57050041EC9E /* DoneTasks.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -930,14 +926,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		60028BA521AAD0D60073D016 /* Root.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				60028BA621AAD0D60073D016 /* Base */,
-			);
-			name = Root.storyboard;
-			sourceTree = "<group>";
-		};
 		60028BAA21AAD0D80073D016 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (

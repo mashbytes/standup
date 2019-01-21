@@ -11,7 +11,7 @@ class HomeViewController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         viewControllers?.forEach { vc in
-            if let dashboardVC = vc as? DashboardViewController {
+            if let navVC = vc as? UINavigationController, let dashboardVC = navVC.topViewController as? DashboardViewController {
                 DashboardConfigurator().configure(dashboardVC)
             }
             if let todoVC = vc as? TodoTasksViewController {
